@@ -5,8 +5,8 @@ var t = new Test('https://github.com');
 t.open('/');
 t.is(t.text('title'), 'GitHub · Social Coding', 'Homepage loaded');
 
-//t.click_and_wait('li.explore a');
-//t.is(t.text('title'), 'Explore · GitHub', 'Explore page title correct');
+t.click_and_wait('li.explore a');
+t.is(t.text('title'), 'Explore · GitHub', 'Explore page title correct');
 
 t.open('/search');
 
