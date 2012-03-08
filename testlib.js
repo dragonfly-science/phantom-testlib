@@ -38,8 +38,8 @@
      * <pre>phantom.injectJs('testlib.js');
      * var t = new Test('https://github.com');
      * t.open('/');
-     * t.is(t.text('title'), 'GitHub · Social Coding', 'Homepage loaded');</pre>
-     * t.done();
+     * t.is(t.text('title'), 'GitHub · Social Coding', 'Homepage loaded');
+     * t.done();</pre>
      *
      * @param {String} base_url The base URL that all {@link #open} calls will be relative to.
      * @class
