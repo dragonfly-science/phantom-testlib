@@ -19,11 +19,12 @@ Installation
 1. Clone this repository
 2. Install PhantomJS:
 
-    # Ubuntu instructions
+    <pre># Ubuntu instructions
     sudo add-apt-repository ppa:jerome-etienne/neoip
     sudo apt-get update
     sudo apt-get install phantomjs
-    # See http://code.google.com/p/phantomjs/wiki/Installation for more
+    # See http://code.google.com/p/phantomjs/wiki/Installation for more</pre>
+
 3. Test:
 
     phantomjs github-test.js
