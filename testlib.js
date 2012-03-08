@@ -27,7 +27,8 @@
         var opt = {
             base_url: null,
             width: 1024,
-            height: 768
+            height: 768,
+            timeout: 10000
         };
         var tests = {
             total: 0,
@@ -79,10 +80,6 @@
                 setTimeout(run_queue, 0);
             };
         }
-        function job_done() {
-            running = false;
-            run_queue();
-        }
 
         function run_queue() {
             if ( running || queue.length === 0 ) {
@@ -93,7 +90,15 @@
             var job = queue.shift();
             try {
                 if ( job.is_async ) {
-                    job.func.call(this, job_done_factory(job.func));
+                    var done = job_done_factory(job.func);
+                    var timeout = setTimeout(function() {
+                        ok(false, job.func + ' timed out');
+                        done();
+                    }, opt.timeout);
+                    job.func.call(this, function() {
+                        clearTimeout(timeout);
+                        done();
+                    });
                 }
                 else {
                     job.func.call(this);
@@ -183,6 +188,10 @@
         }
 
         // Public functions start here
+
+        this.set = function(key, value) {
+            opt[key] = value;
+        };
 
         this.diag = function(message) {
             queue_sync('diag', function() { diag(message); });
