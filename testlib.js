@@ -174,7 +174,7 @@
                     $(window).click(function(e) {
                         var link = $(e.target).filter('a');
                         if ( link.length ) {
-                            location.href = link.attr('href');
+                            location = link.prop('href');
                         }
                     });
                 });
