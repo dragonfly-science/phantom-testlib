@@ -41,7 +41,8 @@
         opt.base_url = base_url;
 
         function proxy(func) {
-            return func.apply(this, arguments);
+            var self = this;
+            return function() { return func.apply(self, arguments); };
         }
 
         function ok(success, description, got, expected) {
@@ -199,38 +200,24 @@
 
         this.open = function(path) {
             queue_async('open', function(done) {
-                // TODO - timeouts
-                //this.startTimeout('Navigate to ' + url, function() {
-                //    this.state.page.onLoadFinished = null;
-                //});
                 if ( ! page ) {
                     page = require('webpage').create();
                     page.viewportSize = { width: opt.width, height: opt.height };
-                    // TODO - console???
-                    //// This is a rather coarsely-grained 'verbose' implementation -
-                    //// it means you need to set t.state.verbose = true before
-                    //// loading a page, then all of the console log messages on that
-                    //// page will be emitted. Maybe we can do better in future.
-                    //if (this.state.verbose) {
-                    //    this.state.page.onConsoleMessage = function(message) {
-                    //        console.log('> ' + message);
-                    //    };
-                    //}
                     page.onConsoleMessage = function(message) {
                         diag('console> ' + message, 1);
                     };
                 }
 
                 // Override the page console.log object so we capture all params
-                //page.onInitialized = proxy(function() {
-                //    page_eval(function() {
-                //        (function(old) {
-                //            console.log = function() {
-                //                old.apply(this, [Array.prototype.slice.call(arguments).join(' ')]);
-                //            };
-                //        })(console.log);
-                //    });
-                //});
+                page.onInitialized = proxy(function() {
+                   page_eval(function() {
+                       (function(old) {
+                           console.log = function() {
+                               old.apply(this, [Array.prototype.slice.call(arguments).join(' ')]);
+                           };
+                       })(console.log);
+                   });
+                });
                 page.onLoadFinished = page_open_callback_factory(done);
                 page.open(opt.base_url + path);
             });
