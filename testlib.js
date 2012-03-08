@@ -190,7 +190,7 @@
         // Public functions start here
 
         this.set = function(key, value) {
-            opt[key] = value;
+            queue_sync('set', function() { opt[key] = value; });
         };
 
         this.diag = function(message) {
