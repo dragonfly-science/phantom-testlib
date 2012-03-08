@@ -234,7 +234,7 @@ ul.inheritsList
 							<div class="fixedFont">
 								<b><a href="../symbols/Test.html#constructor">Test</a></b>(base_url)
 							</div>
-							<div class="description">A test runner, backed by phantomjs.</div>
+							<div class="description">A library for writing web application tests in javascript.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -309,7 +309,7 @@ waits for a page load to occur.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Test.html#like">like</a></b>(got, expected, description)
 								</div>
-								<div class="description"></div>
+								<div class="description">Check that the one value matches a regular expression.</div>
 							</td>
 						</tr>
 					
@@ -327,7 +327,7 @@ waits for a page load to occur.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Test.html#screenshot">screenshot</a></b>(filename)
 								</div>
-								<div class="description"></div>
+								<div class="description">Takes a screenshot.</div>
 							</td>
 						</tr>
 					
@@ -336,7 +336,7 @@ waits for a page load to occur.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Test.html#set">set</a></b>(key, value)
 								</div>
-								<div class="description">Set a configuration value</div>
+								<div class="description">Set a configuration value.</div>
 							</td>
 						</tr>
 					
@@ -345,7 +345,7 @@ waits for a page load to occur.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Test.html#sleep">sleep</a></b>(ms)
 								</div>
-								<div class="description"></div>
+								<div class="description">Pauses the test execution.</div>
 							</td>
 						</tr>
 					
@@ -390,7 +390,18 @@ the given selector.</div>
 				</div>
 				
 				<div class="description">
-					A test runner, backed by phantomjs.
+					A library for writing web application tests in javascript.
+
+Provides a procedural interface for writing tests, so you don't have to
+grok event based programming. Uses PhantomJS to provide a webkit-based
+headless browser to run your tests against.
+
+Synopsis:
+<pre>phantom.injectJs('testlib.js');
+var t = new Test('https://github.com');
+t.open('/');
+t.is(t.text('title'), 'GitHub · Social Coding', 'Homepage loaded');</pre>
+t.done();
 					
 				</div>
 				
@@ -633,7 +644,11 @@ Typically, you would call this method like so:
 					
 					</div>
 					<div class="description">
-						
+						Check that the one value matches a regular expression.
+
+Typically, you would call this method like so:
+
+<pre>t.like(t.text('title'), /Title/, 'Page title contains "Title"');</pre>
 						
 						
 					</div>
@@ -648,19 +663,21 @@ Typically, you would call this method like so:
 									<b>got</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The value to check - typically you should use the result
+           of a call to <a href="../symbols/Test.html#text">#text</a>, <a href="../symbols/Test.html#val">#val</a>, #attr
+           or similar here.</dd>
 							
 								<dt>
 									<b>expected</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The regex this value should match.</dd>
 							
 								<dt>
-									<b>description</b>
+									<span class="light fixedFont">{String}</span> <b>description</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The test description.</dd>
 							
 							</dl>
 						
@@ -718,7 +735,12 @@ Typically, you would call this method like so:
 					
 					</div>
 					<div class="description">
-						
+						Takes a screenshot.
+
+The file type of the screenshot is determined by the extension you
+use. Supported formats are PNG, JPEG and PDF.
+
+<pre>t.screenshot('wat.png');</pre>
 						
 						
 					</div>
@@ -730,7 +752,7 @@ Typically, you would call this method like so:
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>filename</b>
+									<span class="light fixedFont">{String}</span> <b>filename</b>
 									
 								</dt>
 								<dd></dd>
@@ -754,7 +776,20 @@ Typically, you would call this method like so:
 					
 					</div>
 					<div class="description">
-						Set a configuration value
+						Set a configuration value. Available settings:
+
+<dl>
+  <dt><tt>timeout</tt></dt>
+  <dd>The timeout for calls that wait for an event to be completed in milliseconds, e.g. {#open}. Default 10 seconds</dd>
+  <dt><tt>width</tt></dt>
+  <dd>The width of the browser window</dd>
+  <dt><tt>height</tt></dt>
+  <dd>The height of the browser window</dd>
+</dl>
+
+<pre>t.set('timeout', 30000);
+t.open('/a_sloooooow_page');
+t.set('timeout', 10000); // put it back once we're done</pre>
 						
 						
 					</div>
@@ -796,7 +831,13 @@ Typically, you would call this method like so:
 					
 					</div>
 					<div class="description">
-						
+						Pauses the test execution.
+
+Note that this has many legitimate uses, but you shouldn't use it if
+there is a 'wait' method available that can do the job for you, as
+they return as soon as the event they're waiting for has happened.
+
+<pre>t.sleep(1000); // sleep for a second</pre>
 						
 						
 					</div>
@@ -808,10 +849,10 @@ Typically, you would call this method like so:
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>ms</b>
+									<span class="light fixedFont">{Integer}</span> <b>ms</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>How many milliseconds to sleep for.</dd>
 							
 							</dl>
 						
@@ -875,7 +916,7 @@ the given selector.
 This is most useful for form elements:
 
 <pre>t.val('#myform input[name="firstname"]', 'waawaamilk');  // set first name
-t.is(t.val('#myform input[name="firstname"]'), 'waawaamilk', 'First name set correctly');  // and test it</pre>
+t.is(t.val('#myform input[name="firstname"]'), 'waawaamilk', 'First name set correctly');</pre>
 						
 						
 					</div>
@@ -915,7 +956,7 @@ t.is(t.val('#myform input[name="firstname"]'), 'waawaamilk', 'First name set cor
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Mar 08 2012 17:05:37 GMT+1300 (NZDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Mar 09 2012 11:35:58 GMT+1300 (NZDT)
 		</div>
 	</body>
 </html>
