@@ -8,9 +8,9 @@
   <style type="text/css">
     body {
       margin-top: 1.0em;
-      background-color: #bb241b;
+      background-color: #f0f8ff;
       font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
+      color: #000020;
     }
     #container {
       margin: 0 auto;
@@ -42,7 +42,7 @@
         <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
     </div>
 
-    <h1><a href="https://github.com/shoptime/phantom-testlib">phantom-testlib</a>
+    <h1><a href="https://github.com/shoptime/phantom-testlib">phantom-testlib</a><br>
       <span class="small">by <a href="https://github.com/shoptime">shoptime</a></span></h1>
 
     <div class="description">
@@ -52,60 +52,53 @@
     
       <p>A library for writing web application tests in javascript.
 
-Provides a procedural interface for writing tests, so you don't have to grok event based programming. Uses PhantomJS to provide a webkit-based headless browser to run your tests against.
+      Provides a procedural interface for writing tests, so you don't have to grok event based programming. Uses PhantomJS to provide a webkit-based headless browser to run your tests against.</p>
 
-Synopsis
---------
+    <h2>Synopsis</h2>
 
-    phantom.injectJs('testlib.js');
-    var t = new Test('https://github.com');
-    t.open('/');
-    t.is(t.text('title'), 'GitHub · Social Coding', 'Homepage loaded');
-    t.done();</p>
-    
-
-    
-      <h2>Dependencies</h2>
-      <p>PhantomJS: http://www.phantom.js.org/</p>
+    <pre>phantom.injectJs('testlib.js');
+var t = new Test('https://github.com');
+t.open('/');
+t.is(t.text('title'), 'GitHub · Social Coding', 'Homepage loaded');
+t.done();</pre>
     
 
     
       <h2>Install</h2>
-      <p>1. Clone this repository
-2. Install PhantomJS:
+      <ol>
+          <li>Clone the repository</li>
+          <li>Install PhantomJS:
 
     <pre># Ubuntu instructions
-    sudo add-apt-repository ppa:jerome-etienne/neoip
-    sudo apt-get update
-    sudo apt-get install phantomjs
-    # See http://code.google.com/p/phantomjs/wiki/Installation for more</pre>
+sudo add-apt-repository ppa:jerome-etienne/neoip
+sudo apt-get update
+sudo apt-get install phantomjs
+# See <a href="http://code.google.com/p/phantomjs/wiki/Installation">http://code.google.com/p/phantomjs/wiki/Installation</a> for more</pre>
+          </li>
+          <li>Test:
 
-3. Test:
-
-    phantomjs github-test.js
-</p>
+          <pre>phantomjs github-test.js</pre>
+          </li>
+        </ol>
     
+
+     <h2>Documentation</h2>
+     <p><a href="doc/index.html">Full API documentation</a></p>
 
     
       <h2>License</h2>
       <p>MIT</p>
-    
 
     
       <h2>Authors</h2>
-      <p>Martyn Smith (martyn@dollyfish.net.nz)<br/>Nigel McNie (nigel@shoptime.co.nz)<br/>      </p>
-    
-
-    
-      <h2>Contact</h2>
-      <p>Shoptime Software (directors@shoptime.co.nz)<br/>      </p>
+      <p>Martyn Smith (martyn@shoptime.co.nz)<br/>Nigel McNie (nigel@shoptime.co.nz)<br/>      </p>
     
 
     <h2>Download</h2>
     <p>
       You can download this project in either
       <a href="https://github.com/shoptime/phantom-testlib/zipball/master">zip</a> or
-      <a href="https://github.com/shoptime/phantom-testlib/tarball/master">tar formats.
+      <a href="https://github.com/shoptime/phantom-testlib/tarball/master">tar</a> formats.
     </p>
     <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
       by running:
