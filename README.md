@@ -17,17 +17,25 @@ Installation
 ------------
 
 1. Clone this repository
-2. Install PhantomJS:
+2. Either install PhantomJS from the repository (Ubuntu natty, maverick)
 
-    <pre># Ubuntu instructions
-    sudo add-apt-repository ppa:jerome-etienne/neoip
+    <pre>sudo add-apt-repository ppa:jerome-etienne/neoip
     sudo apt-get update
-    sudo apt-get install phantomjs
-    # See http://code.google.com/p/phantomjs/wiki/Installation for more</pre>
+    sudo apt-get install phantomjs</pre>
 
+3. Or build PhantomJS from source 
+
+
+    <pre>sudo apt-get install libqt4-dev qt4-qmake
+    git clone git://github.com/ariya/phantomjs.git && cd phantomjs
+    git checkout 1.4
+    qmake-qt4 && make
+    sudo ln -s  $(pwd)/bin/phantomjs /usr/local/bin/phantomjs</pre>
+    
 3. Test:
 
-    phantomjs github-test.js
+    
+    <pre>phantomjs github-test.js</pre>
 
 Notes
 -----
